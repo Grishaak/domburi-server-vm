@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  django:
+    build: ./domburi_project
+    volumes:
+      - ./static:/domburi/static
+      - ./media:/domburi/media
+      - static_volume:/static
+      - media_volume:/media
+      - db_volume:/db.sqlite3
+      - nginx_temp:/var/cache/nginx  # Монтируем папку кеша
+      - nginx_run:/var/run 
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  nginx:
+    user: "root"
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./static:/domburi/static
+      - ./media:/domburi/media
+      - static_volume:/static
+      - media_volume:/media
+      - db_volume:/db.sqlite3
+      - nginx_temp:/var/cache/nginx  # Монтируем папку кеша
+      - nginx_run:/var/run
+    depends_on:
+      - django
+    restart: unless-stopped
+
+volumes:
+  db_volume: {}
+  static_volume: {}
+  media_volume: {}
+  nginx_temp: {}  # Добавляем том для кеша
+  nginx_run: {} 
