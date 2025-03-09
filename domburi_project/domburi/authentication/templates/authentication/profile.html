@@ -1,0 +1,25 @@
+{% extends "recipes/base.html" %}
+{% block title %}
+Profile User
+{% endblock %}
+
+
+{% block body %}
+<div>
+    <h1 class="h1-prof">Профиль</h1>
+
+    <form class="forms" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-error">{{ form.non_field_errors }}</div>
+        {% for f in form %}
+        <p><label class="form-label" for="{{ f.id_for_label }}">
+            {{ f.label }}</label>
+            {{ f }}</p>
+        <div class="form-error">{{ f.errors }}</div>
+        {% endfor %}
+        <p>
+            <button class="btn_form" type="submit">Сохранить</button>
+        </p>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "recipes/base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+
+{% block body %}
+<h1 class="h1-prof">Логин</h1>
+
+<form class="forms" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div>
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </div>
+</form>
+
+{% endblock %}
